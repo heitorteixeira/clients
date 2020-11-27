@@ -10,7 +10,6 @@ CREATE TABLE client (
 	name varchar(100) NOT NULL,
 	gender char(1) NULL,
 	birth DATE NULL,
-	age varchar(100) NULL,
 	city_id INT NULL,
 	CONSTRAINT FK_client_city FOREIGN KEY (city_id) REFERENCES city (id),
 	PRIMARY KEY (id)
