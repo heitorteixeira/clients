@@ -38,7 +38,7 @@ public class CityControllerTest {
 	@Test
 	public void create() throws Exception{
 		CityDTO cityRequest = new CityDTO();
-		cityRequest.setName("Palhoça");
+		cityRequest.setName("Palhoca");
 		cityRequest.setState(StateEnum.SC);
 		
 		mockMvc.perform(MockMvcRequestBuilders.post(URL)
@@ -50,7 +50,7 @@ public class CityControllerTest {
 	
 	@Test
 	public void findCityByNameNotFound() throws Exception{
-		mockMvc.perform(MockMvcRequestBuilders.get(URL + "?name=Carazinho"))
+		mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byName?name=Carazinho"))
 				.andExpect(status().isOk());
 	}
 	
@@ -61,7 +61,23 @@ public class CityControllerTest {
                 + "{\"name\": \"Florianopolis\",\"state\": \"SC\"}"
                 + "]";
 		
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL + "?name=Flor"))
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byName?name=Flor"))
+				.andExpect(status().isOk())
+				.andReturn();
+
+		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
+	}
+	
+	@Test
+	public void findCityByStateName() throws Exception{
+		String expected = "["
+                + "{\"name\": \"Flordenapolis\",\"state\": \"SC\"},"
+                + "{\"name\": \"Florianopolis\",\"state\": \"SC\"},"
+                + "{\"name\": \"Garopaba\",\"state\": \"SC\"},"
+                + "{\"name\": \"Palhoca\",\"state\": \"SC\"}"
+                + "]";
+		
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byState?state=SC"))
 				.andExpect(status().isOk())
 				.andReturn();
 
