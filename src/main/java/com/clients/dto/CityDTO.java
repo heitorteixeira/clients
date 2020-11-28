@@ -2,13 +2,17 @@ package com.clients.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import com.clients.enumeration.StateEnum;
 
 public class CityDTO implements Serializable {
 
 	private static final long serialVersionUID = 7386579464384317353L;
 	
+	@NotNull
 	private String name;
+	@NotNull
 	private StateEnum state;
 	
 	public CityDTO() {

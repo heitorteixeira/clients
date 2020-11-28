@@ -2,6 +2,8 @@ package com.clients.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +27,7 @@ public class CityController {
 	
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody CityDTO cityRequest) {
+    public void create(@Valid @RequestBody CityDTO cityRequest) {
     	cityService.create(cityRequest);
 	}
     
