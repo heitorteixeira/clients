@@ -8,9 +8,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.clients.dto.ClientDTO;
 import com.clients.exception.CityNotFoundException;
+import com.clients.exception.ClientNotFoundException;
 import com.clients.model.City;
 import com.clients.model.Client;
 import com.clients.repository.CityRepository;
@@ -27,6 +29,7 @@ public class ClientService {
 	
 	private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 	
+	@Transactional(rollbackFor = Exception.class)
 	public Client create(ClientDTO clientRequest) {
 		Optional<City> city = cityRepository.findById(clientRequest.getCityId());
 		if (!city.isPresent()) {
@@ -67,6 +70,15 @@ public class ClientService {
 			return clientDTO;
 		}
 		return null;
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public void delete(Integer clientId) {
+		Optional<Client> clientOptional = clientRepository.findById(clientId);
+		if (!clientOptional.isPresent()) {
+			throw new ClientNotFoundException();
+		}
+		clientRepository.delete(clientOptional.get());
 	}
 
 }

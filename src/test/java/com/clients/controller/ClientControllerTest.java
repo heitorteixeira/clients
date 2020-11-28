@@ -1,5 +1,6 @@
 package com.clients.controller;
 
+import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.clients.dto.ClientDTO;
+import com.clients.repository.ClientRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,6 +27,9 @@ public class ClientControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@Autowired
+	private ClientRepository clientRepository;
 	
 	private static final String URL = "/client";
 	
@@ -86,6 +91,14 @@ public class ClientControllerTest {
 				.andReturn();
 
 		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
+	}
+	
+	@Test
+	public void deleteClientById() throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.delete(URL + "/6"))
+				.andExpect(status().isNoContent())
+				.andReturn();
+		assertFalse(clientRepository.findById(6).isPresent());
 	}
 	
 }

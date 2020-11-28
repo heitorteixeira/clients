@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.clients.dto.CityDTO;
 import com.clients.enumeration.StateEnum;
@@ -17,6 +18,7 @@ public class CityService {
 	@Autowired
 	private CityRepository cityRepository;
 	
+	@Transactional(rollbackFor = Exception.class)
 	public City create(CityDTO cityRequest) {
 		City city = new City();
 		city.setName(cityRequest.getName());
