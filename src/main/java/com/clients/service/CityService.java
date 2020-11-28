@@ -17,13 +17,11 @@ public class CityService {
 	@Autowired
 	private CityRepository cityRepository;
 	
-	public void create(CityDTO cityRequest) {
-		
+	public City create(CityDTO cityRequest) {
 		City city = new City();
 		city.setName(cityRequest.getName());
 		city.setState(cityRequest.getState());
-		cityRepository.save(city);
-		
+		return cityRepository.save(city);
 	}
 
 	public List<CityDTO> findByName(String name) {

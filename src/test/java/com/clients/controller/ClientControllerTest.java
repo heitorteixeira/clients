@@ -72,4 +72,20 @@ public class ClientControllerTest {
 		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
 	}
 	
+	@Test
+	public void findClientById() throws Exception{
+		String expected = "{\n"
+				+ "    \"name\": \"Danusa Teixeira\",\n"
+				+ "    \"gender\": \"F\",\n"
+				+ "    \"birth\": \"20/10/1987\",\n"
+				+ "    \"cityId\": 17\n"
+				+ "}";
+		
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byId/6"))
+				.andExpect(status().isOk())
+				.andReturn();
+
+		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
+	}
+	
 }
