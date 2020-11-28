@@ -81,4 +81,15 @@ public class ClientService {
 		clientRepository.delete(clientOptional.get());
 	}
 
+	@Transactional(rollbackFor = Exception.class)
+	public void updateName(Integer clientId, String name) {
+		Optional<Client> clientOptional = clientRepository.findById(clientId);
+		if (!clientOptional.isPresent()) {
+			throw new ClientNotFoundException();
+		}
+		Client client = clientOptional.get();
+		client.setName(name);
+		clientRepository.save(client);
+	}
+
 }

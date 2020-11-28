@@ -101,4 +101,24 @@ public class ClientControllerTest {
 		assertFalse(clientRepository.findById(6).isPresent());
 	}
 	
+	@Test
+	public void updateClientByName() throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.put(URL + "/6/updateName?name=Rafaela")
+				.contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+		
+		String expected = "{\n"
+				+ "    \"name\": \"Rafaela\",\n"
+				+ "    \"gender\": \"F\",\n"
+				+ "    \"birth\": \"20/10/1987\",\n"
+				+ "    \"cityId\": 17\n"
+				+ "}";
+		
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byId/6"))
+				.andExpect(status().isOk())
+				.andReturn();
+
+		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
+	}
 }
