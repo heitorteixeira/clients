@@ -4,12 +4,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.clients.dto.ClientDTO;
@@ -44,6 +46,30 @@ public class ClientControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
+	}
+	
+	@Test
+	public void findCityByNameNotFound() throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byName?name=Fernanda"))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void findClientByName() throws Exception{
+		String expected = "[\n"
+				+ "    {\n"
+				+ "        \"name\": \"Heitor Teixeira\",\n"
+				+ "        \"gender\": \"M\",\n"
+				+ "        \"birth\": \"02/10/1984\",\n"
+				+ "        \"cityId\": 1\n"
+				+ "    }\n"
+				+ "]";
+		
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byName?name=Heitor"))
+				.andExpect(status().isOk())
+				.andReturn();
+
+		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
 	}
 	
 }
