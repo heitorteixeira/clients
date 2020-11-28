@@ -2,10 +2,14 @@ package com.clients.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.clients.enumeration.StateEnum;
 
 @Entity
 @Table(name = "city")
@@ -18,8 +22,9 @@ public class City {
 	@Column(nullable = false)
 	private String name;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private String state;
+	private StateEnum state;
 
 	public Integer getId() {
 		return id;
@@ -37,11 +42,11 @@ public class City {
 		this.name = name;
 	}
 
-	public String getState() {
+	public StateEnum getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(StateEnum state) {
 		this.state = state;
 	}
 
