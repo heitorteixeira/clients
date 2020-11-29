@@ -38,8 +38,8 @@ public class CityControllerTest {
 	@Test
 	public void create() throws Exception{
 		CityDTO cityRequest = new CityDTO();
-		cityRequest.setName("Palhoca");
-		cityRequest.setState(StateEnum.SC);
+		cityRequest.setName("Porto Alegre");
+		cityRequest.setState(StateEnum.RS);
 		
 		mockMvc.perform(MockMvcRequestBuilders.post(URL)
 				.content(getJson(cityRequest))
@@ -73,8 +73,7 @@ public class CityControllerTest {
 		String expected = "["
                 + "{\"name\": \"Flordenapolis\",\"state\": \"SC\"},"
                 + "{\"name\": \"Florianopolis\",\"state\": \"SC\"},"
-                + "{\"name\": \"Garopaba\",\"state\": \"SC\"},"
-                + "{\"name\": \"Palhoca\",\"state\": \"SC\"}"
+				+ "{\"name\": \"Garopaba\",\"state\": \"SC\"}"
                 + "]";
 		
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byState?state=SC"))

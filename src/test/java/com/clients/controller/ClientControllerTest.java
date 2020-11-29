@@ -41,9 +41,9 @@ public class ClientControllerTest {
 	@Test
 	public void create() throws Exception{
 		ClientDTO clientRequest = new ClientDTO();
-		clientRequest.setName("Heitor Teixeira");
-		clientRequest.setGender("M");
-		clientRequest.setBirth("02/10/1984");
+		clientRequest.setName("Renata Silva");
+		clientRequest.setGender("F");
+		clientRequest.setBirth("05/01/1989");
 		clientRequest.setCityId(1);
 		
 		mockMvc.perform(MockMvcRequestBuilders.post(URL)
@@ -66,7 +66,7 @@ public class ClientControllerTest {
 				+ "        \"name\": \"Heitor Teixeira\",\n"
 				+ "        \"gender\": \"M\",\n"
 				+ "        \"birth\": \"02/10/1984\",\n"
-				+ "        \"cityId\": 1\n"
+				+ "        \"cityId\": 3\n"
 				+ "    }\n"
 				+ "]";
 		
@@ -80,13 +80,13 @@ public class ClientControllerTest {
 	@Test
 	public void findClientById() throws Exception{
 		String expected = "{\n"
-				+ "    \"name\": \"Danusa Teixeira\",\n"
+				+ "    \"name\": \"Fernanda Alt\",\n"
 				+ "    \"gender\": \"F\",\n"
-				+ "    \"birth\": \"20/10/1987\",\n"
-				+ "    \"cityId\": 17\n"
+				+ "    \"birth\": \"01/02/2002\",\n"
+				+ "    \"cityId\": 2\n"
 				+ "}";
 		
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byId/6"))
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byId/3"))
 				.andExpect(status().isOk())
 				.andReturn();
 
@@ -95,15 +95,15 @@ public class ClientControllerTest {
 	
 	@Test
 	public void deleteClientById() throws Exception{
-		mockMvc.perform(MockMvcRequestBuilders.delete(URL + "/6"))
+		mockMvc.perform(MockMvcRequestBuilders.delete(URL + "/2"))
 				.andExpect(status().isNoContent())
 				.andReturn();
-		assertFalse(clientRepository.findById(6).isPresent());
+		assertFalse(clientRepository.findById(2).isPresent());
 	}
 	
 	@Test
 	public void updateClientByName() throws Exception{
-		mockMvc.perform(MockMvcRequestBuilders.put(URL + "/6/updateName?name=Rafaela")
+		mockMvc.perform(MockMvcRequestBuilders.put(URL + "/3/updateName?name=Rafaela")
 				.contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
@@ -111,11 +111,11 @@ public class ClientControllerTest {
 		String expected = "{\n"
 				+ "    \"name\": \"Rafaela\",\n"
 				+ "    \"gender\": \"F\",\n"
-				+ "    \"birth\": \"20/10/1987\",\n"
-				+ "    \"cityId\": 17\n"
+				+ "    \"birth\": \"01/02/2002\",\n"
+				+ "    \"cityId\": 2\n"
 				+ "}";
 		
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byId/6"))
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/byId/3"))
 				.andExpect(status().isOk())
 				.andReturn();
 
