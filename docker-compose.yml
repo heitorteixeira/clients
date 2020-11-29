@@ -1,0 +1,17 @@
+version: '3.6'
+services:
+    mysql:
+        image: mysql:8.0.21
+        container_name: mysql-clients
+        environment:
+            MYSQL_HOST: "localhost"
+            MYSQL_ROOT_PASSWORD: "root"
+            TZ: "America/Fortaleza"
+            MYSQL_DATABASE: clients
+        command: mysqld --lower_case_table_names=1 --sql-mode="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION" --skip-ssl
+        ports:
+            - "3306:3306"
+        volumes:
+            - "./data/mysql-clients/:/var/lib/mysql-clients"
+        cap_add:
+            - SYS_NICE  
