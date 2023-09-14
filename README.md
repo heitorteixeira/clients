@@ -6,43 +6,43 @@
 
 -Mysql database
 
--H2 database para testes
+-H2 database for tests
 
-## Funcionalidades
+## Funcionalities
 
--Cadastrar cidade
+-Add city
 
--Cadastrar cliente
+-Add client
 
--Consultar cidade pelo nome
+-Find the city by name
 
--Consultar cidade pelo estado
+-Find the city by state
 
--Consultar cliente pelo nome
+-Find client by name
 
--Consultar cliente pelo Id
+-Find client by the ID
 
--Remover cliente
+-Delete client
 
--Alterar o nome do cliente
+-Update client name
 
 ## Docker
 
-1)Verifique se possui o docker e docker compose instalado.
+1)Verify if you have Docker or Docker Comose installed.
 
-2)Para instalar a imagem do mysql para execução da aplicação você deve entrar na pasta do projeto e executar o comando:
+2)To install the MySQL image to execute the project you have to enter in the main folder of the project and execute this command:
 `docker-compose up -d`
 
-3)Executa o build e cria e a imagem docker: 
+3)Execute the build and create the docker image: 
 `sudo JAVA_HOME=versao_jdk_java11 ./mvnw install dockerfile:build` 
 
 Ex: `sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 ./mvnw install dockerfile:build`
 
-4)Subir aplicação `docker run -p 8080:8080 -t clients`
+4)Run the application `docker run -p 8080:8080 -t clients`
 
-Exemplos de curl:
+cURL examples:
 
-Cria cidade:
+Create city:
 curl --location --request POST 'localhost:8080/city' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -50,7 +50,7 @@ curl --location --request POST 'localhost:8080/city' \
     "state": "SC"
 }'
 
-Cria cliente:
+Create client:
 curl --location --request POST 'localhost:8080/client' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -60,24 +60,24 @@ curl --location --request POST 'localhost:8080/client' \
     "cityId":1
 }'
 
-Consulta cidade pelo nome:
+Find the city by name:
 curl --location --request GET 'localhost:8080/city/byName?name=Blu' \
 --data-raw ''
 
-Consulta cidade pelo Estado:
+Find city by state:
 curl --location --request GET 'localhost:8080/city/byState?state=SC' \
 --data-raw ''
 
-Consultar cliente pelo nome:
+Find client by name:
 curl --location --request GET 'localhost:8080/client/byName?name=Rena' \
 --data-raw ''
 
-Consultar cliente pelo Id:
+Find client by ID:
 curl --location --request GET 'localhost:8080/client/byId/1' \
 --data-raw ''
 
-Alterar o nome do cliente
+Update client name:
 curl --location --request PUT 'localhost:8080/client/1/updateName?name=Carla'
 
-Remover cliente:
+Delete client:
 curl --location --request DELETE 'localhost:8080/client/1'
